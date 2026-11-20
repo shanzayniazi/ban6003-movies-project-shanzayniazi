@@ -1,0 +1,33 @@
+column_name,data_type,description,source,transformation_or_derivation,notes_or_concerns
+movieId,int64,Unique movie identifier,movies_metadata.csv,Original value,No duplicate movie IDs
+tmdbId,int64,TMDB movie identifier,movies_metadata.csv,Original value,No missing values
+imdb_id,str,IMDb movie identifier,movies_metadata.csv,Original value,No missing values
+title,str,Movie title,movies_metadata.csv,Original value,May differ from original title
+original_title,str,Original movie title,movies_metadata.csv,Original value,
+original_language,str,Original language of the movie,movies_metadata.csv,Original value,
+release_date,str,Movie release date,movies_metadata.csv,Original value,Some dates may be missing
+runtime,float64,Movie length in minutes,movies_metadata.csv,Original value,Some values may be missing
+budget,int64,Movie production budget,movies_metadata.csv,Original value,Zero may indicate missing information
+revenue,float64,Movie box office revenue,movies_metadata.csv,Original value,Zero may indicate missing information
+popularity,float64,Movie popularity measure,movies_metadata.csv,Original value,
+vote_average,float64,Average TMDB rating,movies_metadata.csv,Original value,
+vote_count,float64,Number of TMDB votes,movies_metadata.csv,Original value,
+genres,str,Movie genres,movies_metadata.csv,Original value,
+production_companies,str,Companies involved in production,movies_metadata.csv,Original value,
+production_countries,str,Countries involved in production,movies_metadata.csv,Original value,
+adult,bool,Adult content indicator,movies_metadata.csv,Original value,
+status,str,Movie release status,movies_metadata.csv,Original value,
+genres_list,str,List of movie genres,movies_metadata.csv,Extracted from genres,Some values missing
+primary_genre,str,Primary movie genre,movies_metadata.csv,Extracted from genres_list,Some values missing
+release_year,int64,Year the movie was released,movies_metadata.csv,Extracted from release_date,Missing if release date unavailable
+user_rating_mean,float64,Average user rating,ratings.csv,Aggregated by movieId,Missing for movies without ratings
+user_rating_count,float64,Number of user ratings,ratings.csv,Counted by movieId,Missing for movies without ratings
+user_rating_std,float64,Standard deviation of user ratings,ratings.csv,Calculated by movieId,May be missing
+first_rating_date,datetime64[us],Date of first user rating,ratings.csv,Minimum rating date by movieId,Missing for unrated movies
+last_rating_date,datetime64[us],Date of most recent user rating,ratings.csv,Maximum rating date by movieId,Missing for unrated movies
+director,str,Movie director,credits_curated.csv,Joined by tmdbId,Some values missing
+top_cast,str,Main movie cast,credits_curated.csv,Joined by tmdbId,Some values missing
+keywords_list,str,Keywords associated with movie,keywords_curated.csv,Joined by tmdbId,Some values missing
+has_revenue,Int64,Indicates positive reported revenue,movies_metadata.csv,Created from revenue > 0,Zero revenue may reflect missing data
+rating_target_eligible,bool,Indicates at least 20 user ratings,ratings.csv,Created from user_rating_count >= 20,
+high_user_rating,Int64,Indicates average user rating of at least 3.75 for eligible movies,ratings.csv,Created from user_rating_mean and rating_target_eligible,Missing for ineligible movies
